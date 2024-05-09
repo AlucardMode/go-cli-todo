@@ -22,14 +22,14 @@ func (l *List) AddTask(description string) {
 	l.Tasks = append(l.Tasks, Task{ID: len(l.Tasks) + 1, Description: description, State: false})
 }
 
+// Searches for task in list with id. if id is found, uses updateTask method from Task Struct
 func (l *List) UpdateTask(id int, newTask Task) {
 	_, err := l.FindTask(id)
 	if err != nil {
 		syserr := fmt.Errorf("Task %d not found in list", id)
 		panic(syserr)
 	}
-	l.Tasks[id].State = newTask.State
-	l.Tasks[id].Description = newTask.Description
+	l.Tasks[id].updateTask(newTask)
 
 }
 
