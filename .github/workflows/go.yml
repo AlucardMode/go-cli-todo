@@ -2,9 +2,9 @@ name: Go
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
 
 jobs:
 
@@ -18,6 +18,16 @@ jobs:
       with:
         go-version: '^1.15'
     - name: Build
-      run: go build -v ./...
+      run: go build -o cmd-todo-app ./cmd/main.go
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: '^1.15'
     - name: Test
-      run: go test -v ./...
+      run: go test ./tests
